@@ -1,0 +1,32 @@
+{
+  "name": "pc-simple-scaffold",
+  "description": "pc-scaffold",
+  "main": "gulpfile.js",
+  "authors": [
+    "longshihui"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "pc",
+    "scaffold",
+    "simple"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "normalize-css": "^7.0.0"
+  },
+  "overrides": {
+    "jquery": {
+      "main": "dist/jquery.min.js"
+    }
+  }
+}
