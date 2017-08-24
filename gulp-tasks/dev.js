@@ -29,7 +29,8 @@ gulp.task('dev.server', function () {
             routes: {
                 "/bower_components": "bower_components",
                 "/js": "./build/js",
-                "/css": "./build/css"
+                "/css": "./build/css",
+                "/img": "./build/img"
             },
             middleware: mockRoutes
         },

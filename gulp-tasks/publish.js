@@ -21,7 +21,7 @@ gulp.task('publish', ['build'], function (cb) {
  * 根据html中的build注解合并静态资源
  */
 gulp.task('publish.useref', function () {
-    return gulp.src('./build/views/*.html', { base: './build' })
+    return gulp.src('./build/views/**/*.html', { base: './build' })
         .pipe(useref({
             searchPath: ['./build', '.']
         }))
@@ -32,7 +32,7 @@ gulp.task('publish.useref', function () {
  * 压缩静态资源
  */
 gulp.task('publish.minify', function () {
-    return gulp.src(['./dist/css/*.bundle.css', './dist/js/*.bundle.js'], { base : './dist' })
+    return gulp.src(['./dist/css/**/*.css', './dist/js/**/*.js'], { base : './dist' })
         .pipe(gulpif('*.js', minifyJs()))
         .pipe(gulpif('*.css', minifyCss()))
         .pipe(gulp.dest('./dist'));
@@ -44,11 +44,21 @@ gulp.task('publish.minify', function () {
 gulp.task('publish.cdn', function () {
     let resultURL = '';
 
-    return gulp.src(['./build/views/*.html', './build/css/*.css'], { base: './build' })
+    return gulp.src(['./dist/views/**/*.html', './dist/css/**/*.css'], { base: './build' })
         .pipe(cdnify({
-            rewriter: function (url) {
+            rewriter: function (url, process) {
+                //如果已经是cdn地址则忽略
+                if (/(.*?:)?\/\//g.test(url)){
+                    process(url);
+                }
+
+                Object.keys(CDN).forEach(function (key) {
+                    CDN[key] = CDN[key].replace(/\/$/g, '');
+                });
+
                 const paths = url.split('/');
                 const fileName = paths[paths.length - 1];
+
                 if (/(\.css)$/.test(fileName)) {
                     resultURL = `${CDN.css}/${fileName}`;
                 }

@@ -148,7 +148,7 @@ gulp.task('build.html', function (cb) {
  * 将Bower组件注入到html中，并且将html源文件复制到build文件夹下
  */
 gulp.task('build.html.bower-module-inject', function () {
-    return gulp.src('./src/views/*.html')
+    return gulp.src('./src/views/**/*.html')
         .pipe(wiredep({
             ignorePath: /^(\.\.\/)*\.\./
         }))
