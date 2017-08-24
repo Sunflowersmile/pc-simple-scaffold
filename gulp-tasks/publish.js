@@ -10,11 +10,22 @@ const
 const CDN = {
     img: '//img.58cdn.com.cn/',
     css: '//c.58cdn.com.cn/',
-    js: '//j1.58cdn.com.cn/'
+    js: '//j1.58cdn.com.cn/',
+    font: '//c.58cdn.com.cn/'
 };
 
 gulp.task('publish', ['build'], function (cb) {
-   runSequence('publish.useref', 'publish.cdn', 'publish.minify', cb);
+   runSequence(['publish.useref', 'publish.images.copy', 'publish.font'], 'publish.cdn', 'publish.minify', cb);
+});
+
+gulp.task('publish.images.copy', function () {
+   return gulp.src('./build/img/**/*.{png,gif,jpg}', { base: './build' })
+       .pipe(gulp.dest('./dist'))
+});
+
+gulp.task('publish.font', function () {
+    return gulp.src('./build/font/**/*', { base: './build' })
+        .pipe(gulp.dest('./dist'))
 });
 
 /**
@@ -67,6 +78,8 @@ gulp.task('publish.cdn', function () {
                 }
                 else if (/(\.(png|jpg|gif))$/.test(fileName)) {
                     resultURL = `${CDN.img}/${fileName}`;
+                } else {
+                    resultURL = `${CDN.font}/${fileName}`;
                 }
 
                 return resultURL;

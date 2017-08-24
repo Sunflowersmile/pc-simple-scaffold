@@ -17,9 +17,10 @@ gulp.task('dev.server', function () {
      */
     const files = [
         './build/js/*.js',
-        './build/img/',
+        './build/img/*.{png,gif,jpg}',
         './build/css/*.css',
-        './build/views/*.html'
+        './build/views/*.html',
+        './build/font/**/*'
     ];
 
     browserSync.init({
@@ -30,7 +31,8 @@ gulp.task('dev.server', function () {
                 "/bower_components": "bower_components",
                 "/js": "./build/js",
                 "/css": "./build/css",
-                "/img": "./build/img"
+                "/img": "./build/img",
+                "/font": "./build/font"
             },
             middleware: mockRoutes
         },
@@ -44,4 +46,5 @@ gulp.task('dev.watch', function () {
     gulp.watch('./src/css/**/*.scss', ['build.css']);
     gulp.watch('./src/images/**/*.{png,jpg,gif}', ['build.images']);
     gulp.watch('./src/views/*.html', ['build.html']);
+    gulp.watch('./src/font/**/*', ['build.font']);
 });

@@ -29,7 +29,14 @@ const
  * 6. 告诉gulp build任务完成
  */
 gulp.task('build', function (cb) {
-    runSequence('clean', ['build.js', 'build.css', 'build.images', 'build.html'], cb);
+    runSequence('clean',
+        [
+            'build.js',
+            'build.css',
+            'build.images',
+            'build.font',
+            'build.html'
+        ], cb);
 });
 /**
  * 编译js,生成sourcemaps
@@ -153,4 +160,9 @@ gulp.task('build.html.bower-module-inject', function () {
             ignorePath: /^(\.\.\/)*\.\./
         }))
         .pipe(gulp.dest('./build/views'));
+});
+
+gulp.task('build.font', function () {
+   return gulp.src('./src/font/**/*', { base: './src' })
+       .pipe(gulp.dest('./build'))
 });
